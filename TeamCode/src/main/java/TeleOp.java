@@ -1,5 +1,6 @@
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
@@ -53,6 +54,8 @@ public class TeleOp extends OpMode {
 
     @Override
     public void loop() {
+        Vector2d Leftjoy = new Vector2d(gamepad1.left_stick_x,-gamepad1.left_stick_y);
+        Vector2d Rightjoy = new Vector2d(gamepad1.right_stick_x,- gamepad1.right_stick_y);
         // Example with a motor's current position
         float targetPosition = 100;
         double velocityR0 = pid.calculate(targetPosition, Rightz.getVelocity());
@@ -61,9 +64,9 @@ public class TeleOp extends OpMode {
         double velocityL1 = pid.calculate(targetPosition, Lefto.getVelocity());
         //double velocity = Leftz.getVelocity();
 
-        // Your TeleOp control logic goes here
-        // This code will execute repeatedly during the TeleOp period
-        Rightz.setVelocity(velocityR0);
+        //TeleOp control logic goes here
+        //
+        //Rightz.setVelocity(velocityR0);
         Righto.setVelocity(velocityR1);
         Leftz.setVelocity(velocityL0);
         Lefto.setVelocity(velocityL1);
@@ -73,6 +76,7 @@ public class TeleOp extends OpMode {
         telemetry.addData("Leftz Velocity", Leftz.getVelocity());
         telemetry.addData("Lefto Velocity", Lefto.getVelocity());
         telemetry.addData("Difference", (Leftz.getCurrentPosition()-Lefto.getCurrentPosition()));
+        telemetry.addData("Oh Yeah!", Leftjoy);
         //telemetry.addData("velocity", Righto.getVelocity());
         //telemetry.addData("ticks per second", );
 
