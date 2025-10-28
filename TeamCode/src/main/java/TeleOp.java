@@ -7,13 +7,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PwmControl;
 
+import org.ejml.equation.Variable;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends OpMode {
 
     // Declare hardware variables here
 
-    MotorEx Zero;
-    MotorEx One;
+    MotorEx Rightz;
+    MotorEx Righto;
+
+    MotorEx Leftz;
+
+    MotorEx Lefto;
     PIDFController pid;
 
 
@@ -22,10 +29,14 @@ public class TeleOp extends OpMode {
 
         // Initialize hardware here
         //Hardware
-                One = new MotorEx(hardwareMap, "o");
+                Leftz = new MotorEx(hardwareMap, "leftz");
                 //MotorEx One = new Motor(hardwareMap, "o");
-                Zero = new MotorEx(hardwareMap, "z");
-                Zero.setRunMode(Motor.RunMode.VelocityControl);
+                Lefto = new MotorEx(hardwareMap, "lefto");
+
+                Rightz = new MotorEx(hardwareMap, "rightz");
+
+                Righto = new MotorEx(hardwareMap, "righto");
+
 
         //Software
         pid=new PIDFController(7, 0, 0, 1);
@@ -37,20 +48,26 @@ public class TeleOp extends OpMode {
     @Override
     public void loop() {
         // Example with a motor's current position
-        //float targetPosition = 100;
-        //double command = pid.calculate(targetPosition, Zero.getCurrentPosition());
-        //double velocity = Zero.getVelocity();
+        float targetPosition = 100;
+        double velocityR0 = pid.calculate(targetPosition, Rightz.getVelocity());
+        double velocityR1 = pid.calculate(targetPosition, Righto.getVelocity());
+        double velocityL0 = pid.calculate(targetPosition, Leftz.getVelocity());
+        double velocityL1 = pid.calculate(targetPosition, Lefto.getVelocity());
+        //double velocity = Leftz.getVelocity();
 
         // Your TeleOp control logic goes here
         // This code will execute repeatedly during the TeleOp period
-        //Zero.setVelocity(command);
+        Rightz.setVelocity(velocityR0);
+        Righto.setVelocity(velocityR1);
+        Leftz.setVelocity(velocityL0);
+        Lefto.setVelocity(velocityL1);
         //One.setPower(command);
         //Zero.set(gamepad1.right_stick_y);
         //One.setPower((-gamepad1.right_stick_y));
-        //telemetry.addData("Zero pos", Zero.getCurrentPosition());
-        //telemetry.addData("One pos", One.getCurrentPosition());
-        //telemetry.addData("Difference", (Zero.getCurrentPosition()-One.getCurrentPosition()));
-        telemetry.addData("velocity", Zero.getVelocity());
+        telemetry.addData("Leftz Velocity", Leftz.getVelocity());
+        telemetry.addData("Lefto Velocity", Lefto.getVelocity());
+        telemetry.addData("Difference", (Leftz.getCurrentPosition()-Lefto.getCurrentPosition()));
+        //telemetry.addData("velocity", Righto.getVelocity());
         //telemetry.addData("ticks per second", );
 
 
