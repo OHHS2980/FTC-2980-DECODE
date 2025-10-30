@@ -2,10 +2,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp
-public class coast extends OpMode {
+public class configuration extends OpMode {
 
     DcMotorEx Right2;
     DcMotorEx Right1;
@@ -36,8 +35,8 @@ public class coast extends OpMode {
 
         Left2.setVelocity(gamepad1.right_stick_y*500);
         Left1.setVelocity(gamepad1.right_stick_y*-500);
-        Right2.setVelocity(gamepad1.right_stick_x*1000);
-        Right1.setVelocity(gamepad1.right_stick_x*-1000);
+        Right2.setVelocity(gamepad1.right_stick_x*500);
+        Right1.setVelocity(gamepad1.right_stick_x*-500);
 
 
     }

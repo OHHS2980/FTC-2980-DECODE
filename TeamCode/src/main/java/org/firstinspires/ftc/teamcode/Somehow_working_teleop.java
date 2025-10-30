@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "Differential Swerve with PID")
-public class DifferentialSwerveDrive extends OpMode {
+@TeleOp(name = "Bethesda")
+public class Somehow_working_teleop extends OpMode {
 
     // Motors for differential swerve - 2 motors per module
     DcMotorEx left1;  // leftz
@@ -16,8 +16,8 @@ public class DifferentialSwerveDrive extends OpMode {
     DcMotorEx right2; // righto
 
     // Differential swerve parameters
-    double TICKS_PER_REVOLUTION = 537.6;
-    double ANGLE_GEAR_RATIO = 1.0; // Adjust this to match your differential ratio
+    double TICKS_PER_REVOLUTION = 8192;
+    double ANGLE_GEAR_RATIO = 108/65; // Adjust this to match your differential ratio
     double MAX_DRIVE_VELOCITY = 2000; // Max velocity in ticks per second
 
     // PID constants - TUNE THESE VALUES
