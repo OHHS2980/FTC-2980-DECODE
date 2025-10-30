@@ -459,10 +459,10 @@ public class bethesda extends OpMode {
         telemetry.addData("Right Vel", "M1: %.0f | M2: %.0f", rightMotor1Vel, rightMotor2Vel);
 
         // Live tuning
-        if (gamepad1.dpad_up) kP += 1.0;
-        if (gamepad1.dpad_down) kP = Math.max(0, kP - 1.0);
-        if (gamepad1.dpad_right) ANGLE_GEAR_RATIO += 0.05;
-        if (gamepad1.dpad_left) ANGLE_GEAR_RATIO = Math.max(0.1, ANGLE_GEAR_RATIO - 0.05);
+        //if (gamepad1.dpad_up) kP += 1.0;
+        //if (gamepad1.dpad_down) kP = Math.max(0, kP - 1.0);
+        //if (gamepad1.dpad_right) ANGLE_GEAR_RATIO += 0.05;
+        //if (gamepad1.dpad_left) ANGLE_GEAR_RATIO = Math.max(0.1, ANGLE_GEAR_RATIO - 0.05);
 
         telemetry.addLine();
         telemetry.addData("Tuning", "kP: %.1f | Ratio: %.3f", kP, ANGLE_GEAR_RATIO);
