@@ -1,7 +1,12 @@
+import com.arcrobotics.ftclib.hardware.ServoEx;
+import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.arcrobotics.ftclib.hardware.motors.CRServo;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @TeleOp
 public class configuration extends OpMode {
@@ -11,6 +16,21 @@ public class configuration extends OpMode {
     DcMotorEx Left1;
     DcMotorEx Left2;
 
+    //ServoEx intakeL = new SimpleServo(hardwareMap, "",0,360) {
+
+    //ServoEx intakeR = new SimpleServo(hardwareMap, "",0,360) {
+
+
+    CRServo intakeL;
+    CRServo intakeR;
+    ServoEx flap;
+
+    Motor outtakeL = new Motor(hardwareMap, "");
+
+    Motor outtakeR= new Motor(hardwareMap, "");
+
+
+
     @Override
     public void init() {
 
@@ -18,6 +38,9 @@ public class configuration extends OpMode {
         Left2 = hardwareMap.get(DcMotorEx.class, "left2");
         Right1 = hardwareMap.get(DcMotorEx.class, "right1");
         Right2 = hardwareMap.get(DcMotorEx.class, "right2");
+        intakeL = new CRServo(hardwareMap,"");
+        intakeR = new CRServo(hardwareMap,"");
+        flap = new SimpleServo(hardwareMap,"",0,15);
     }
 
     @Override
@@ -38,6 +61,19 @@ public class configuration extends OpMode {
         Right2.setVelocity(gamepad1.right_stick_x*500);
         Right1.setVelocity(gamepad1.right_stick_x*-500);
 
+
+        double outtake_p = (0.5);
+        if(gamepad1.dpad_up) {
+
+            outtake_p = (outtake_p + 0.1);
+        }
+        if(gamepad1.a)
+            flap.rotateByAngle(15);
+
+        outtakeL.motor.setPower(outtake_p);
+        outtakeR.motor.setPower(-outtake_p);
+        intakeL.set(1);
+        intakeR.set(1);
 
     }
 
