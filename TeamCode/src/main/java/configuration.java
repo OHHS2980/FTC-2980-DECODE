@@ -1,3 +1,5 @@
+import static android.os.SystemClock.sleep;
+
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
@@ -25,9 +27,9 @@ public class configuration extends OpMode {
     CRServo intakeR;
     ServoEx flap;
 
-    Motor outtakeL = new Motor(hardwareMap, "");
+    //Motor outtakeL = new Motor(hardwareMap, "");
 
-    Motor outtakeR= new Motor(hardwareMap, "");
+    //Motor outtakeR= new Motor(hardwareMap, "");
 
 
 
@@ -38,9 +40,11 @@ public class configuration extends OpMode {
         Left2 = hardwareMap.get(DcMotorEx.class, "left2");
         Right1 = hardwareMap.get(DcMotorEx.class, "right1");
         Right2 = hardwareMap.get(DcMotorEx.class, "right2");
-        intakeL = new CRServo(hardwareMap,"");
-        intakeR = new CRServo(hardwareMap,"");
-        flap = new SimpleServo(hardwareMap,"",0,15);
+        intakeL = new CRServo(hardwareMap,"intakeL");
+        intakeR = new CRServo(hardwareMap,"intakeR");
+        flap = new SimpleServo(hardwareMap,"flap",0,15);
+
+        //bullshit
     }
 
     @Override
@@ -56,24 +60,42 @@ public class configuration extends OpMode {
         Right1.setVelocity(gamepad1.left_stick_y*1000);
 
 
-        Left2.setVelocity(gamepad1.right_stick_y*500);
-        Left1.setVelocity(gamepad1.right_stick_y*-500);
-        Right2.setVelocity(gamepad1.right_stick_x*500);
-        Right1.setVelocity(gamepad1.right_stick_x*-500);
+        Left2.setVelocity(gamepad1.right_stick_y*1000);
+        Left1.setVelocity(gamepad1.right_stick_y*-1000);
+        Right2.setVelocity(gamepad1.right_stick_x*1000);
+        Right1.setVelocity(gamepad1.right_stick_x*-1000);
 
 
-        double outtake_p = (0.5);
-        if(gamepad1.dpad_up) {
-
-            outtake_p = (outtake_p + 0.1);
-        }
+        double outtake_p = (0.1);
+        if(gamepad1.dpad_up)
+            outtake_p = (outtake_p*10);
         if(gamepad1.a)
             flap.rotateByAngle(15);
 
-        outtakeL.motor.setPower(outtake_p);
-        outtakeR.motor.setPower(-outtake_p);
-        intakeL.set(1);
-        intakeR.set(1);
+            flap.rotateByAngle(-15);
+
+        //outtakeL.motor.setPower(outtake_p);
+        //outtakeR.motor.setPower(-outtake_p);
+
+
+ /*       boolean intake = false;
+
+        if (intake == true)
+            if (gamepad1.bWasReleased())
+                intake = false;
+                //sleep(400);
+        if (intake == false)
+            if (gamepad1.bWasReleased())
+                intake = true;
+                //sleep(400);
+
+        if (intake == true)
+            intakeR.set(1);
+            intakeL.set(-1);
+        if (intake == false)
+            intakeR.set(0);
+            intakeL.set(0);
+*/
 
     }
 
