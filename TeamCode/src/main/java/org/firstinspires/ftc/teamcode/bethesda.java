@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Thread.sleep;
+
 import com.arcrobotics.ftclib.hardware.ServoEx;
+import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -11,8 +14,8 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "Fixed Differential Swerve")
-public class FixedDifferentialSwerve extends OpMode {
+@TeleOp(name = "bethesda")
+public class bethesda extends OpMode {
 
     // Motors for differential swerve - 2 motors per module
     DcMotorEx left1;
@@ -23,6 +26,10 @@ public class FixedDifferentialSwerve extends OpMode {
     CRServo intakeL;
     CRServo intakeR;
     ServoEx flap;
+
+    DcMotorEx outtakeR;
+
+    DcMotorEx outtakeL;
 
     // IMU for field-oriented control
     IMU imu;
@@ -46,8 +53,8 @@ public class FixedDifferentialSwerve extends OpMode {
 
     // Differential swerve parameters
     double TICKS_PER_REVOLUTION = 8192;
-    double ANGLE_GEAR_RATIO = 20.0; // Calibrated: at 10 it rotated 2x too much
-    double MAX_DRIVE_VELOCITY = 2500; // REDUCED from 5000 - allows more headroom for steering
+    double ANGLE_GEAR_RATIO = 0.3;
+    double MAX_DRIVE_VELOCITY = 5000;
     double MAX_ANGLE_VELOCITY = 4000;
 
     // PID constants
@@ -75,15 +82,20 @@ public class FixedDifferentialSwerve extends OpMode {
     public void init() {
         // ========== CONFIGURATION ==========
         // Set to true for modules that have REV Through Bore encoders installed
-        USE_LEFT_THROUGH_BORE = true;  // LEFT module - no encoder yet
-        USE_RIGHT_THROUGH_BORE = true;  // RIGHT module - HAS ENCODER
+        USE_LEFT_THROUGH_BORE = true;
+        USE_RIGHT_THROUGH_BORE = true;
         // ===================================
 
+        intakeL = new CRServo(hardwareMap,"intakeL");
+        intakeR = new CRServo(hardwareMap,"intakeR");
+        flap = new SimpleServo(hardwareMap,"flap",0,15);
         // Initialize motors
         left1 = hardwareMap.get(DcMotorEx.class, "left1");
         left2 = hardwareMap.get(DcMotorEx.class, "left2");
         right1 = hardwareMap.get(DcMotorEx.class, "right1");
         right2 = hardwareMap.get(DcMotorEx.class, "right2");
+        outtakeL = hardwareMap.get(DcMotorEx.class,"outtakeL");
+        outtakeR = hardwareMap.get(DcMotorEx.class, "outtakeR");
 
         // Initialize IMU for field-oriented control
         imu = hardwareMap.get(IMU.class, "imu");
@@ -139,15 +151,18 @@ public class FixedDifferentialSwerve extends OpMode {
         telemetry.addData("Drive Mode", "FIELD-ORIENTED");
         telemetry.addData("", "Press GP1 BACK to reset field orientation");
         telemetry.update();
+        //flap.rotateByAngle(5);
     }
 
     @Override
     public void loop() {
+        outtakeR.setPower(1);
+        outtakeL.setPower(-1);
         // FIELD-ORIENTED RESET: Press BACK on CONTROLLER 1 to reset field orientation
         if (gamepad1.back) {
             imu.resetYaw();
             headingOffset = 0;
-            try { Thread.sleep(200); } catch (Exception e) {}
+            try { sleep(200); } catch (Exception e) {}
         }
 
         // RECENTER WHEELS: Press BACK button on CONTROLLER 2 to reset module angles to 0
@@ -173,8 +188,15 @@ public class FixedDifferentialSwerve extends OpMode {
                 rightEncoderOffset = rightEncoder.getCurrentPosition();
             }
 
-            try { Thread.sleep(200); } catch (Exception e) {}
+            try { sleep(200); } catch (Exception e) {}
         }
+        intakeL.set(-1);
+        intakeR.set(1);
+
+        if (gamepad1.x)
+            flap.rotateByAngle(15);
+            try { sleep(200); } catch (Exception e) {}
+            flap.rotateByAngle(-15);
 
 /*        // Toggle calibration mode with X button - CONTROLLER 2
         if (gamepad2.x && !calibrationMode) {
@@ -182,9 +204,9 @@ public class FixedDifferentialSwerve extends OpMode {
             calibrationStartPos1 = left1.getCurrentPosition();
             calibrationStartPos2 = left2.getCurrentPosition();
             calibrationTimer.reset();
-  */          try { Thread.sleep(300); } catch (Exception e) {}
+            try { Thread.sleep(300); } catch (Exception e) {}
         }
-
+*/
         // AUTO CALIBRATION MODE - spins module and measures gear ratio
 /*        if (calibrationMode) {
             double calibrationTime = calibrationTimer.seconds();
