@@ -72,7 +72,9 @@ public class bethesda extends OpMode {
             robot.stopIntake();
         }
 
-
+        if (gamepad1.right_bumper) {
+            robot.MAX_DRIVE_VELOCITY = 10000;
+        }
 /*        // Toggle calibration mode with X button - CONTROLLER 2
         if (gamepad2.x && !calibrationMode) {
             calibrationMode = true;
