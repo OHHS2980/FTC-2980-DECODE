@@ -66,6 +66,12 @@ public class bethesda extends OpMode {
             robot.flapRotate();
         }
 
+        if (gamepad1.left_bumper){
+            robot.runIntake();
+        } else if (!gamepad1.left_bumper){
+            robot.stopIntake();
+        }
+
 
 /*        // Toggle calibration mode with X button - CONTROLLER 2
         if (gamepad2.x && !calibrationMode) {

@@ -223,6 +223,16 @@ public class hardware {
         }
         flap.rotateByAngle(-15);
     }
+
+    public void runIntake(){
+        intakeL.set(-1);
+        intakeR.set(1);
+    }
+
+    public void stopIntake(){
+        intakeL.set(0);
+        intakeR.set(0);
+    }
     /**
      * Get module angle - uses either motor encoders or through bore based on config
      */
