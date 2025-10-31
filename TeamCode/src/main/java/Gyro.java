@@ -19,7 +19,7 @@ public class Gyro {
 
 
     IMU.Parameters myIMUparameters;
-    
+
 
     RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.FORWARD;
     RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;
