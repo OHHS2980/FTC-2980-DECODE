@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -49,12 +50,12 @@ public class bethesda extends OpMode {
 
     // Encoder offsets (set when you press BACK to recenter)
     int leftEncoderOffset = 0;
-    int rightEncoderOffset = 160;
+    int rightEncoderOffset = -1998;
 
     // Differential swerve parameters
     double TICKS_PER_REVOLUTION = 8192;
-    double ANGLE_GEAR_RATIO = 0.3;
-    double MAX_DRIVE_VELOCITY = 5000;
+    double ANGLE_GEAR_RATIO = 0.25;
+    double MAX_DRIVE_VELOCITY = 2000;
     double MAX_ANGLE_VELOCITY = 4000;
 
     // PID constants
@@ -88,7 +89,7 @@ public class bethesda extends OpMode {
 
         intakeL = new CRServo(hardwareMap,"intakeL");
         intakeR = new CRServo(hardwareMap,"intakeR");
-        flap = new SimpleServo(hardwareMap,"flap",0,15);
+        flap = new SimpleServo(hardwareMap,"flap",-30,30);
         // Initialize motors
         left1 = hardwareMap.get(DcMotorEx.class, "left1");
         left2 = hardwareMap.get(DcMotorEx.class, "left2");
@@ -119,8 +120,8 @@ public class bethesda extends OpMode {
         }
 
         // Set motor directions
-        left1.setDirection(DcMotorEx.Direction.FORWARD);
-        left2.setDirection(DcMotorEx.Direction.FORWARD);
+        left1.setDirection(DcMotorEx.Direction.REVERSE);
+        left2.setDirection(DcMotorEx.Direction.REVERSE);
         right1.setDirection(DcMotorEx.Direction.REVERSE);
         right2.setDirection(DcMotorEx.Direction.REVERSE);
 
@@ -156,9 +157,11 @@ public class bethesda extends OpMode {
 
     @Override
     public void loop() {
-        outtakeR.setPower(1);
-        outtakeL.setPower(-1);
+        outtakeR.setPower(0.8);
+        outtakeL.setPower(-0.8);
         // FIELD-ORIENTED RESET: Press BACK on CONTROLLER 1 to reset field orientation
+        if (gamepad1.left_bumper)
+            MAX_DRIVE_VELOCITY = 10000;
         if (gamepad1.back) {
             imu.resetYaw();
             headingOffset = 0;
@@ -193,10 +196,10 @@ public class bethesda extends OpMode {
         intakeL.set(-1);
         intakeR.set(1);
 
-        if (gamepad1.x)
-            flap.rotateByAngle(15);
+        if (gamepad1.xWasReleased())
+            flap.rotateByAngle(-30);
             try { sleep(200); } catch (Exception e) {}
-            flap.rotateByAngle(-15);
+            flap.rotateByAngle(30);
 
 /*        // Toggle calibration mode with X button - CONTROLLER 2
         if (gamepad2.x && !calibrationMode) {
@@ -536,7 +539,7 @@ public class bethesda extends OpMode {
      */
     private double getLeftModuleAngle() {
         if (USE_LEFT_THROUGH_BORE) {
-            return getThroughBoreAngle(leftEncoder, leftEncoderOffset);
+            return -getThroughBoreAngle(leftEncoder, leftEncoderOffset);
         } else {
             return getModuleAngle(left1, left2);
         }
