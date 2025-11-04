@@ -54,10 +54,10 @@ public class configuration extends OpMode {
         Right1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         Right2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        Left2.setVelocity(gamepad1.left_stick_y*1000);
-        Left1.setVelocity(gamepad1.left_stick_y*1000);
-        Right2.setVelocity(gamepad1.left_stick_y*1000);
-        Right1.setVelocity(gamepad1.left_stick_y*1000);
+        Left2.setVelocity(gamepad1.left_stick_y*2000);
+        Left1.setVelocity(gamepad1.left_stick_y*2000);
+        Right2.setVelocity(gamepad1.left_stick_y*2000);
+        Right1.setVelocity(gamepad1.left_stick_y*2000);
 
 
         Left2.setVelocity(gamepad1.right_stick_y*1000);

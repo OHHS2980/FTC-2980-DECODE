@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,8 +16,10 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "bethesda")
-public class bethesda extends OpMode {
+import java.util.EventListenerProxy;
+
+@Autonomous(name = "Random bullshit go")
+public class auto extends OpMode {
 
     // Motors for differential swerve - 2 motors per module
     DcMotorEx left1;
@@ -55,7 +58,7 @@ public class bethesda extends OpMode {
     // Differential swerve parameters
     double TICKS_PER_REVOLUTION = 8192;
     double ANGLE_GEAR_RATIO = 0.25;
-    double MAX_DRIVE_VELOCITY = 2000;
+    double MAX_DRIVE_VELOCITY = 4000;
     double MAX_ANGLE_VELOCITY = 4000;
 
     // PID constants
@@ -66,12 +69,18 @@ public class bethesda extends OpMode {
     // PID state for left module
     double leftIntegral = 0;
     double leftLastError = 0;
+
+    double x = 0;
+    double y = 0;
+    double magnitude = 0;
     ElapsedTime leftTimer = new ElapsedTime();
 
     // PID state for right module
     double rightIntegral = 0;
     double rightLastError = 0;
     ElapsedTime rightTimer = new ElapsedTime();
+
+    ElapsedTime auto = new  ElapsedTime();
 
     // Calibration mode
 /*    boolean calibrationMode = false;
@@ -198,8 +207,8 @@ public class bethesda extends OpMode {
 
         if (gamepad1.xWasReleased())
             flap.rotateByAngle(-30);
-            try { sleep(200); } catch (Exception e) {}
-            flap.rotateByAngle(30);
+        try { sleep(200); } catch (Exception e) {}
+        flap.rotateByAngle(30);
 
 /*        // Toggle calibration mode with X button - CONTROLLER 2
         if (gamepad2.x && !calibrationMode) {
@@ -281,8 +290,23 @@ public class bethesda extends OpMode {
 */
         // Get joystick input
 
-        double x = gamepad1.left_stick_x;
-        double y = -gamepad1.left_stick_y;
+        //double x = gamepad1.left_stick_x;
+        //double y = -gamepad1.left_stick_y;
+
+        telemetry.addData("Auto time",(auto.seconds()));
+
+
+        if (auto.seconds() < 3) {
+             x = 1;
+             y = -1;
+             magnitude = 1;
+
+        } else if (auto.seconds() > 3) {
+            x = 0;
+            y = 0;
+            magnitude = 0;
+        }
+
 
         double rotation = gamepad1.right_stick_x;
 
@@ -309,7 +333,7 @@ public class bethesda extends OpMode {
         // Calculate target angle and magnitude
         double targetAngleRad = Math.atan2(y, x);
         double targetAngleDeg = Math.toDegrees(targetAngleRad);
-        double magnitude = Math.sqrt(x * x + y * y);
+        //double magnitude = Math.sqrt(x * x + y * y);
         magnitude = Math.min(magnitude, 1.0);
 
         // Get current module angles
