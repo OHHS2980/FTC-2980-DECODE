@@ -49,8 +49,8 @@ public class bethesda extends OpMode {
     double THROUGH_BORE_CPR = 8192; // Counts per revolution for REV Through Bore
 
     // Encoder offsets (set when you press BACK to recenter)
-    int leftEncoderOffset = -3112;
-    int rightEncoderOffset = -1648;
+    int leftEncoderOffset = 6734;
+    int rightEncoderOffset = -16007;
 
     // Differential swerve parameters
     double TICKS_PER_REVOLUTION = 8192;
@@ -196,10 +196,10 @@ public class bethesda extends OpMode {
         intakeL.set(-1);
         intakeR.set(1);
 
-        if (gamepad1.xWasReleased())
-            flap.rotateByAngle(-30);
-            try { sleep(200); } catch (Exception e) {}
-            flap.rotateByAngle(30);
+        //if (gamepad1.xWasReleased())
+        //    flap.rotateByAngle(-30);
+        //    try { sleep(200); } catch (Exception e) {}
+        //    flap.rotateByAngle(30);
 
 /*        // Toggle calibration mode with X button - CONTROLLER 2
         if (gamepad2.x && !calibrationMode) {
