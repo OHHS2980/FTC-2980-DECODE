@@ -1,0 +1,27 @@
+Okay, this is Michi.
+
+this is going to need a lot of debugging. A LOT.
+I can not test anything due to not having the robot.
+
+The goal is that hopefully, the robot at least moves.
+^^ this means that the methods implemented here may be inefficient to debug. This is why im documenting it all.
+I apologize. I haven't had a chance to restructure the code.
+
+
+I will document and comment as much as possible to explain what every function does.
+
+!!!!!FIRST AND FOREMOST
+
+Desperation.java is a copy of bethesda.java with the swerve-specific functions removed.
+THIS MAY CAUSE ERRORS!
+I will remove all errors that pop up in the IDE but errors on the driver hub may happen.
+
+SOME HARDWARE CONFIGURATIONS HAVE CHANGED.
+Notably, hardware declarations needed for SWERVE are removed.
+I do not know what the hardware situation is with the current robot.
+YOU WILL NEED TO REMAP IT!
+
+
+
+
+
