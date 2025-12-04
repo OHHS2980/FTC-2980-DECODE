@@ -54,10 +54,10 @@ public class desperation extends OpMode {
 
         flap = new SimpleServo(hardwareMap, "flap", -30, 30);
         // Initialize motors
-        left1 = hardwareMap.get(DcMotorEx.class, "left1");
-        left2 = hardwareMap.get(DcMotorEx.class, "left2");
-        right1 = hardwareMap.get(DcMotorEx.class, "right1");
-        right2 = hardwareMap.get(DcMotorEx.class, "right2");
+        left1 = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        left2 = hardwareMap.get(DcMotorEx.class, "backLeft");
+        right1 = hardwareMap.get(DcMotorEx.class, "frontRight");
+        right2 = hardwareMap.get(DcMotorEx.class, "backRight");
 
 
         // Initialize IMU for field-oriented control
