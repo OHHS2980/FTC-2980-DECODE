@@ -277,10 +277,10 @@ public class desperation extends OpMode {
         backLeftPower = power* sin/max + turn;
         backRightPower = power * cos/max - turn;
 
-        if ((power + Math.abs(turn)) >1 ){
-            frontLeftPower /= power + turn;
-            frontRightPower /= power + turn;
-            backLeftPower /= power + turn;
+        if ((power + Math.abs(turn)) > 1 ){
+            frontLeftPower /= power + turn ;
+            frontRightPower /= power + turn ;
+            backLeftPower /= power + turn ;
             backRightPower /= power + turn;
 
         }
