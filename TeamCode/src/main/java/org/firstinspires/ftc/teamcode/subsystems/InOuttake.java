@@ -18,6 +18,7 @@ public class InOuttake extends SubsystemBase{
 
 
      DcMotorEx outtake1;
+     DcMotorEx intake2;
 
     // flap = new SimpleServo(hardwareMap,"flap",-30,30);
 
@@ -26,16 +27,31 @@ public class InOuttake extends SubsystemBase{
 
         outtake1 = hMap.get(DcMotorEx.class,"outtake1");
         outtake2 = hMap.get(DcMotorEx.class, "outtake2");
+        intake = hMap.get(DcMotorEx.class, "intake");
+        intake2 = hMap.get(DcMotorEx.class, "intake2");
 
     }
 
     public void runOuttake(double power){
         outtake1.setPower(power);
-        outtake2.setPower(-power);
+        outtake2.setPower(power * -1);
+        intake.setPower(power * -1);
+    }
+
+    public void runIntake(double power){
+
+        intake2.setPower(power);
+
+    }
+
+    public void stopIntake(){
+        outtake1.setPower(0);
+        intake.setPower(0);
+        intake2.setPower(0);
     }
 
     public void stopOuttake(){
-        outtake1.setPower(0);
+
         outtake2.setPower(0);
     }
 

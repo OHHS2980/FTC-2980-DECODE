@@ -24,12 +24,6 @@ public class desperation extends OpMode {
     DcMotorEx backRight;
     DcMotorEx frontRight;
 
-    ServoEx flap;
-
-    DcMotorEx outtake2;
-    DcMotorEx intake;
-
-    DcMotorEx outtake1;
 
     private InOuttake inOuttake;
 
@@ -56,8 +50,8 @@ public class desperation extends OpMode {
     public void init() {
 
 
-
         inOuttake = new InOuttake(hardwareMap);
+
 
         // Initialize motors
         backLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -125,12 +119,25 @@ public class desperation extends OpMode {
     public void loop() {
 
 
+       if (gamepad1.right_trigger > 0.4) {
+            inOuttake.runOuttake(10 * gamepad1.right_trigger);
+        } else if (gamepad1.right_trigger < 0.4) {
+            inOuttake.stopOuttake();
+        }
+
+
+        if (gamepad1.left_trigger > 0.4) {
+        inOuttake.runIntake(10 * gamepad1.left_trigger);
+        } else if (gamepad1.left_trigger < 0.4){
+            inOuttake.stopIntake();
+        }
+
         /*
          * MICHI NOTE:
          * this is where the code will check gamepad input
          */
 
-        inOuttake.runOuttake(10);
+
 
         double x = gamepad1.left_stick_x;
         double y = -gamepad1.left_stick_y;
