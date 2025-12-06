@@ -12,12 +12,12 @@ public class InOuttake extends SubsystemBase{
 
     ServoEx flap;
 
-    DcMotorEx outtake2;
+     DcMotorEx outtake2;
     DcMotorEx intake;
 
 
 
-    static DcMotorEx outtake1;
+     DcMotorEx outtake1;
 
     // flap = new SimpleServo(hardwareMap,"flap",-30,30);
 
@@ -29,13 +29,17 @@ public class InOuttake extends SubsystemBase{
 
     }
 
-    public static void runIntake(int power){
+    public void runOuttake(double power){
         outtake1.setPower(power);
+        outtake2.setPower(-power);
     }
 
-    public void runOuttake(){
-
+    public void stopOuttake(){
+        outtake1.setPower(0);
+        outtake2.setPower(0);
     }
+
+
 
 
 }

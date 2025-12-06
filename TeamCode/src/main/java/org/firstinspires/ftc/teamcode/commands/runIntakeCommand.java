@@ -18,7 +18,7 @@ public class runIntakeCommand extends CommandBase {
 
     @Override
     public  void initialize() {
-    subsystem.runIntake(10);
+    //subsystem.runIntake(10);
     }
 
 }

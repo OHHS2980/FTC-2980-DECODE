@@ -13,6 +13,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
+import org.firstinspires.ftc.teamcode.subsystems.InOuttake;
+
 @TeleOp(name = "desperation")
 public class desperation extends OpMode {
 
@@ -28,6 +30,8 @@ public class desperation extends OpMode {
     DcMotorEx intake;
 
     DcMotorEx outtake1;
+
+    private InOuttake inOuttake;
 
 
     // IMU for field-oriented control
@@ -53,7 +57,7 @@ public class desperation extends OpMode {
 
 
 
-
+        inOuttake = new InOuttake(hardwareMap);
 
         // Initialize motors
         backLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -125,20 +129,8 @@ public class desperation extends OpMode {
          * MICHI NOTE:
          * this is where the code will check gamepad input
          */
-        intake.setPower(-gamepad1.right_trigger);
-        intake2.setPower(gamepad1.left_trigger);
-        outtake1.setPower(gamepad1.right_trigger);
-        outtake2.setPower(-gamepad1.right_trigger);
-        if (gamepad1.a) {
-            outtake1.setDirection(DcMotorSimple.Direction.REVERSE);
-            outtake2.setDirection(DcMotorSimple.Direction.REVERSE);
-            intake2.setDirection(DcMotorSimple.Direction.REVERSE);
-        } else {
-            outtake1.setDirection(DcMotorSimple.Direction.FORWARD);
-            outtake2.setDirection(DcMotorSimple.Direction.FORWARD);
-            intake2.setDirection(DcMotorSimple.Direction.FORWARD);
-        }
 
+        inOuttake.runOuttake(10);
 
         double x = gamepad1.left_stick_x;
         double y = -gamepad1.left_stick_y;

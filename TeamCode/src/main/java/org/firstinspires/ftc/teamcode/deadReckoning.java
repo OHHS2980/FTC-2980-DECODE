@@ -19,13 +19,13 @@ public class deadReckoning extends OpMode {
 
     private InOuttake inOuttake;
     private Drivebase drivebase;
-    private GamepadEx gamepad;
+
 
 
 
     @Override
     public void init() {
-        gamepad = new GamepadEx(gamepad1);
+
 
      inOuttake = new InOuttake(hardwareMap);
 
@@ -40,7 +40,7 @@ public class deadReckoning extends OpMode {
 
     @Override
     public void loop(){
-        inOuttake.runIntake(10);
+        inOuttake.runOuttake(1);
 
         drivebase.simpleDrive(0,30,0);
     }
