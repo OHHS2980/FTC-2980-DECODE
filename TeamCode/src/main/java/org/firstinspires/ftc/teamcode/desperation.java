@@ -107,7 +107,7 @@ public class desperation extends OpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Drive Mode", "FIELD-ORIENTED");
-        telemetry.addData("", "Press GP1 BACK to reset field orientation");
+        //telemetry.addData("", "Press GP1 BACK to reset field orientation");
         telemetry.update();
         //flap.rotateByAngle(5);
 
@@ -117,104 +117,7 @@ public class desperation extends OpMode {
 
     @Override
     public void loop() {
-        //outtakeR.setPower(0.8);
-        //outtakeL.setPower(-0.8);
-        // FIELD-ORIENTED RESET: Press BACK on CONTROLLER 1 to reset field orientation
-        if (gamepad1.left_bumper)
 
-            if (gamepad1.back) {
-                imu.resetYaw();
-                headingOffset = 0;
-                try {
-                    sleep(200);
-                } catch (Exception e) {
-                }
-            }
-
-
-        //if (gamepad1.xWasReleased())
-        //    flap.rotateByAngle(-30);
-        //    try { sleep(200); } catch (Exception e) {}
-        //    flap.rotateByAngle(30);
-
-/*        // Toggle calibration mode with X button - CONTROLLER 2
-        if (gamepad2.x && !calibrationMode) {
-            calibrationMode = true;
-            calibrationStartPos1 = left1.getCurrentPosition();
-            calibrationStartPos2 = left2.getCurrentPosition();
-            calibrationTimer.reset();
-            try { Thread.sleep(300); } catch (Exception e) {}
-        }
-*/
-        // AUTO CALIBRATION MODE - spins module and measures gear ratio
-/*        if (calibrationMode) {
-            double calibrationTime = calibrationTimer.seconds();
-
-            // Spin for 3 seconds, then analyze
-            if (calibrationTime < 3.0) {
-                // Spin the module by creating differential velocity
-                double spinVel = 1500; // Slow spin
-                left1.setVelocity(spinVel);
-                left2.setVelocity(-spinVel); // Opposite direction = pure rotation
-                right1.setVelocity(0);
-                right2.setVelocity(0);
-
-                telemetry.addData("=== CALIBRATION ===", "");
-                telemetry.addData("Status", "Spinning left module...");
-                telemetry.addData("Time", "%.1f / 3.0 seconds", calibrationTime);
-
-            } else {
-                // Stop and calculate
-                left1.setVelocity(0);
-                left2.setVelocity(0);
-
-                int currentPos1 = left1.getCurrentPosition();
-                int currentPos2 = left2.getCurrentPosition();
-                int deltaPos1 = currentPos1 - calibrationStartPos1;
-                int deltaPos2 = currentPos2 - calibrationStartPos2;
-                int posDiff = deltaPos1 - deltaPos2;
-
-                // Calculate how many degrees the module actually rotated
-                // We know: posDiff = (degrees rotated) * (TICKS_PER_REV / 360) * 2 * GEAR_RATIO
-                // So: GEAR_RATIO = posDiff / (2 * TICKS_PER_REV * degrees / 360)
-
-                // Estimate degrees rotated (rough, but gives us the ratio)
-                double estimatedDegrees = (posDiff / (2.0 * ANGLE_GEAR_RATIO)) / TICKS_PER_REVOLUTION * 360.0;
-
-                telemetry.addData("=== CALIBRATION RESULTS ===", "");
-                telemetry.addData("Motor 1 moved", "%d ticks", deltaPos1);
-                telemetry.addData("Motor 2 moved", "%d ticks", deltaPos2);
-                telemetry.addData("Difference", "%d ticks", posDiff);
-                telemetry.addLine();
-                telemetry.addData("Est. rotation", "%.1f degrees", estimatedDegrees);
-                telemetry.addData("Current ratio", "%.4f", ANGLE_GEAR_RATIO);
-                telemetry.addLine();
-
-                // If the module spun way more or less than expected, calculate correction
-                if (Math.abs(estimatedDegrees) > 10) {
-                    double expectedPosDiff = posDiff; // What we measured
-                    double actualDegrees = estimatedDegrees; // What the ratio calculated
-                    // We want actualDegrees to equal what really happened
-                    // Adjust ratio proportionally
-                    double ratioCorrection = Math.abs(posDiff) / (2.0 * TICKS_PER_REVOLUTION);
-
-                    telemetry.addData("TRY THIS RATIO", "%.4f", ratioCorrection);
-                    telemetry.addData("", "(Use D-pad ← → to adjust)");
-                }
-
-                telemetry.addLine();
-                telemetry.addData("Press B", "to exit calibration (GP2)");
-
-                if (gamepad2.b) {
-                    calibrationMode = false;
-                    try { Thread.sleep(300); } catch (Exception e) {}
-                }
-            }
-
-            telemetry.update();
-            return;
-        }
-*/
 
         /*
          * MICHI NOTE:
