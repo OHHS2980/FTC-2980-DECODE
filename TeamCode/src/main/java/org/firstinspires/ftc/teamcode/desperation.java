@@ -22,13 +22,13 @@ public class desperation extends OpMode {
     DcMotorEx backRight;
     DcMotorEx frontRight;
 
-
     ServoEx flap;
 
     DcMotorEx outtake2;
     DcMotorEx intake;
 
     DcMotorEx outtake1;
+
 
     // IMU for field-oriented control
     IMU imu;
@@ -52,14 +52,16 @@ public class desperation extends OpMode {
     public void init() {
 
 
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
+
         intake2 = hardwareMap.get(DcMotorEx.class, "intake2");
-        flap = new SimpleServo(hardwareMap,"flap",-30,30);
+
         // Initialize motors
         backLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         frontRight = hardwareMap.get(DcMotorEx.class, "backRight");
+        flap = new SimpleServo(hardwareMap,"flap",-30,30);
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
         outtake1 = hardwareMap.get(DcMotorEx.class,"outtake1");
         outtake2 = hardwareMap.get(DcMotorEx.class, "outtake2");
 
