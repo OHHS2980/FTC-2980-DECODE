@@ -31,15 +31,17 @@ public class deadReckoning extends LinearOpMode {
 
         drivebase = new Drivebase(hardwareMap);
 
-        drivebase.simpleDrive(0,30,0);
+        drivebase.simpleDrive(0,1,0);
         sleep(500);
-        drivebase.simpleDrive(0,0,-20);
+        drivebase.simpleDrive(0,0, -0.8);
         sleep(700);
         drivebase.simpleDrive(0,0,0);
         sleep(500);
-        inOuttake.runOuttake(10);
+        inOuttake.runOuttake(1);
+        inOuttake.runBelt(1);
         sleep(800);
         inOuttake.stopOuttake();
+        inOuttake.stopBelt();
     }
 }
 

@@ -38,19 +38,19 @@ public class InOuttake extends SubsystemBase{
         intake.setPower(power * -1);
     }
 
-    public void runIntake(double power){
+    public void runBelt(double power){
 
         intake2.setPower(power);
 
     }
 
-    public void stopIntake(){
+    public void stopOuttake(){
         outtake1.setPower(0);
         intake.setPower(0);
         intake2.setPower(0);
     }
 
-    public void stopOuttake(){
+    public void stopBelt(){
 
         outtake2.setPower(0);
     }

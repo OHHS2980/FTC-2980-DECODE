@@ -136,9 +136,9 @@ public class desperation extends OpMode {
 
 
         if (gamepad1.left_trigger > 0.4) {
-        inOuttake.runIntake(10 * gamepad1.left_trigger);
+        inOuttake.runBelt(10 * gamepad1.left_trigger);
         } else if (gamepad1.left_trigger < 0.4){
-            inOuttake.stopIntake();
+            inOuttake.stopBelt();
         }
 
         /*
