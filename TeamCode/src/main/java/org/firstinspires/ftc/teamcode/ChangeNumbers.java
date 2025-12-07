@@ -7,6 +7,10 @@ public class ChangeNumbers {
 
     public float delay = 1000;
 
+    public static double distanceHorizontal = 2;
+    public static double limelightHeight = 11.5;
+    public static double limelightAngle = 10;
+
 
     //flywheel speed = m(distance) + b
     public static float b = 0.47f; //.4525

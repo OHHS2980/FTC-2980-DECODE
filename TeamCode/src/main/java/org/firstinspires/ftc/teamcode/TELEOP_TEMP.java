@@ -77,7 +77,16 @@ public class TELEOP_TEMP extends LinearOpMode {
             double tx = result.getTx(); // How far left or right the target is (degrees)
             telemetry.addData("autoalign angle", tx);
 
-            if (tx > ChangeNumbers.tolerance)
+            double ty = result.getTy();
+            if (ty < -9.75d) {
+                ty = -9.75;
+            }
+
+            double distance = (38 - ChangeNumbers.limelightHeight) / Math.tan(Math.toRadians(ty + ChangeNumbers.limelightAngle));
+
+            double targetAngle = Math.atan(distance / ChangeNumbers.distanceHorizontal);
+
+            if (tx - targetAngle > ChangeNumbers.tolerance)
             {
                 double speed = autoAlignPID.calculate(tx, 0);
                 mecanum.driveWithMotorPowers(-speed, -speed, -speed, -speed);
