@@ -86,7 +86,7 @@ public class TELEOP_TEMP extends LinearOpMode {
 
             double targetAngle = Math.atan(distance / ChangeNumbers.distanceHorizontal);
 
-            if (tx - targetAngle > ChangeNumbers.tolerance)
+            if (Math.abs(tx - targetAngle) > ChangeNumbers.tolerance)
             {
                 double speed = autoAlignPID.calculate(tx, 0);
                 mecanum.driveWithMotorPowers(-speed, -speed, -speed, -speed);
