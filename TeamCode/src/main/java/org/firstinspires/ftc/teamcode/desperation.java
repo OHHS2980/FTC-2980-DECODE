@@ -126,10 +126,10 @@ public class desperation extends OpMode {
 
         if (inOuttake.outtake1.getCurrent(CurrentUnit.AMPS) > 3.5)
         {
-            maxouttake = 1;
+            maxouttake = 0.70;
         } else
         {
-            maxouttake = .75;
+            maxouttake = 0.50;
         }
 
 
