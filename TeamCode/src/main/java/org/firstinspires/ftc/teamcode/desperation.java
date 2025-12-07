@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.subsystems.InOuttake;
 
 @TeleOp(name = "desperation")
@@ -50,6 +51,7 @@ public class desperation extends OpMode {
     public void init() {
 
 
+
         inOuttake = new InOuttake(hardwareMap);
 
 
@@ -67,6 +69,7 @@ public class desperation extends OpMode {
 
         // Initialize IMU for field-oriented control
         imu = hardwareMap.get(IMU.class, "imu");
+
 
         // Define how the Control Hub is mounted on the robot
         // Adjust these parameters based on your hub orientation
@@ -117,6 +120,12 @@ public class desperation extends OpMode {
 
     @Override
     public void loop() {
+
+        if (gamepad1.a) {
+            imu.resetYaw();
+        }
+
+        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
 
        if (gamepad1.right_trigger > 0.4) {
