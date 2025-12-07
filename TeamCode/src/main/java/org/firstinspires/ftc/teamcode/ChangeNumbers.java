@@ -9,7 +9,7 @@ public class ChangeNumbers {
 
 
     //flywheel speed = m(distance) + b
-    public static float b = 0.4725f; //.4525
+    public static float b = 0.47f; //.4525
 
     public static float m = 0.225f; //.225
 
@@ -17,7 +17,7 @@ public class ChangeNumbers {
 
     //AUTO ALIGN TUNING
 
-    public static double tolerance = 0.05;
+    public static double tolerance = 3.5;
     //if autoalign is within this angle, stop it so it stops moving
 
     //If you want the auto align to go faster if its farther away, increase this

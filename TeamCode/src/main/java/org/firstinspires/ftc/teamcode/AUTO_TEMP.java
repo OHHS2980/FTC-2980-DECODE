@@ -137,8 +137,10 @@ public class AUTO_TEMP extends LinearOpMode {
 
         airSort();
 
-        fl.set(1);
-        fr.set(1);
+        sleep(400);
+
+        fl.set(-1);
+        fr.set(-1);
 
         bl.set(-1);
         br.set(-1);

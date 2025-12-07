@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
-
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.ButtonReader;
@@ -11,18 +10,13 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-import java.util.List;
-
 @TeleOp
-public class TELEOP_TEMP extends LinearOpMode {
+public class TELEOP_RED extends LinearOpMode {
     Limelight3A limelight;
 
     MecanumDrive mecanum;
@@ -80,7 +74,7 @@ public class TELEOP_TEMP extends LinearOpMode {
             if (tx > ChangeNumbers.tolerance)
             {
                 double speed = autoAlignPID.calculate(tx, 0);
-                mecanum.driveWithMotorPowers(-speed, -speed, -speed, -speed);
+                mecanum.driveWithMotorPowers(speed, speed, speed, speed);
             }
             else
             {

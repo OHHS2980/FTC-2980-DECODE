@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
-
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.ButtonReader;
@@ -11,22 +10,25 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-import java.util.List;
+import org.firstinspires.ftc.ftccommon.internal.manualcontrol.parameters.ImuParameters;
 
 @TeleOp
-public class TELEOP_TEMP extends LinearOpMode {
+public class TELEOP_BLUE extends LinearOpMode {
     Limelight3A limelight;
 
     MecanumDrive mecanum;
     Motor flywheel;
+
+    IMU imu;
+
+    IMU.Parameters myIMUparameters;
 
     Servo servo;
 
@@ -80,7 +82,7 @@ public class TELEOP_TEMP extends LinearOpMode {
             if (tx > ChangeNumbers.tolerance)
             {
                 double speed = autoAlignPID.calculate(tx, 0);
-                mecanum.driveWithMotorPowers(-speed, -speed, -speed, -speed);
+                mecanum.driveWithMotorPowers(speed, speed, speed, speed);
             }
             else
             {
@@ -134,6 +136,15 @@ public class TELEOP_TEMP extends LinearOpMode {
         servo = hardwareMap.get(Servo.class, "servo");
         flywheel = new Motor(hardwareMap, "flywheel");
         flywheel.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        imu = hardwareMap.get(IMU.class, "imu");
+
+        myIMUparameters = new IMU.Parameters(
+                new RevHubOrientationOnRobot(
+                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                )
+        );
         Motor fl = new Motor(hardwareMap, "fl"); //3 // REAL = 0
         Motor bl = new Motor(hardwareMap, "bl"); // 1  // REAL = 1
         Motor fr = new Motor(hardwareMap, "fr"); //2 // REAL = 2 // V
@@ -224,10 +235,11 @@ public class TELEOP_TEMP extends LinearOpMode {
             {
                 case driving:
 
-                    mecanum.driveRobotCentric(
+                    mecanum.driveFieldCentric(
                             -driveOp.getLeftX(),
                             driveOp.getRightX(),
-                            driveOp.getLeftY()
+                            driveOp.getLeftY(),
+                            imu.getRobotYawPitchRollAngles().getYaw()
                     );
                     telemetry.addData("drive:", true);
 
