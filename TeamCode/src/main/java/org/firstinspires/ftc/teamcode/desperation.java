@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.subsystems.InOuttake;
 
 @TeleOp(name = "desperation")
@@ -31,7 +32,7 @@ public class desperation extends OpMode {
 
     // IMU for field-oriented control
     IMU imu;
-    double headingOffset = 0; // Stores the heading when field orientation is reset
+    double headingOffset = 0;  // Stores the heading when field orientation is reset
 
     // Optional: REV Through Bore Encoders for absolute angle sensing
     // Using DcMotor just for reading encoder position (not for motor control)
@@ -43,6 +44,8 @@ public class desperation extends OpMode {
     double frontRightPower;
     double backLeftPower;
     double backRightPower;
+
+    public double maxouttake;
 
 
 
@@ -109,7 +112,7 @@ public class desperation extends OpMode {
 
 
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("Drive Mode", "FIELD-ORIENTED");
+        telemetry.addData("Drive Mode", "RoBoT-ORIENTED");
         //telemetry.addData("", "Press GP1 BACK to reset field orientation");
         telemetry.update();
         //flap.rotateByAngle(5);
@@ -121,6 +124,16 @@ public class desperation extends OpMode {
     @Override
     public void loop() {
 
+        if (inOuttake.outtake1.getCurrent(CurrentUnit.AMPS) > 3.5)
+        {
+            maxouttake = 1;
+        } else
+        {
+            maxouttake = .75;
+        }
+
+
+
         if (gamepad1.a) {
             imu.resetYaw();
         }
@@ -129,14 +142,14 @@ public class desperation extends OpMode {
 
 
        if (gamepad1.right_trigger > 0.4) {
-            inOuttake.runOuttake(10 * gamepad1.right_trigger);
+            inOuttake.runOuttake(maxouttake * gamepad1.right_trigger);
         } else if (gamepad1.right_trigger < 0.4) {
             inOuttake.stopOuttake();
         }
 
 
         if (gamepad1.left_trigger > 0.4) {
-        inOuttake.runBelt(10 * gamepad1.left_trigger);
+        inOuttake.runBelt(1 * gamepad1.left_trigger);
         } else if (gamepad1.left_trigger < 0.4){
             inOuttake.stopBelt();
         }
