@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.InOuttake;
 import org.firstinspires.ftc.teamcode.commands.runIntakeCommand;
 
 @Autonomous
-public class deadReckoning extends OpMode {
+public class deadReckoning extends LinearOpMode {
 
     private InOuttake inOuttake;
     private Drivebase drivebase;
@@ -23,32 +24,19 @@ public class deadReckoning extends OpMode {
 
 
 
-    @Override
-    public void init() {
-
-
-     inOuttake = new InOuttake(hardwareMap);
-
-     drivebase = new Drivebase(hardwareMap);
-
-
-
-
-
-    }
-
 
     @Override
-    public void loop(){
-        inOuttake.runOuttake(1);
+    public void runOpMode() throws InterruptedException {
+        inOuttake = new InOuttake(hardwareMap);
+
+        drivebase = new Drivebase(hardwareMap);
 
         drivebase.simpleDrive(0,30,0);
+        sleep(500);
+        drivebase.simpleDrive(10,0,0);
+        sleep(500);
+        inOuttake.runOuttake(10);
     }
-
-
-
-
-
 }
 
 
